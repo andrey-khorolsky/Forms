@@ -1,5 +1,5 @@
 class CreateGroupMembers < ActiveRecord::Migration[7.0]
-  def change
+  def up
     create_enum :mem_types, ["User", "Group"]
 
     create_table :group_members, id: :uuid, default: "gen_random_uuid()" do |t|
@@ -9,5 +9,13 @@ class CreateGroupMembers < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+  end
+
+  def down
+    drop_table :group_members
+
+    execute <<-SQL
+      DROP TYPE mem_types;
+    SQL
   end
 end

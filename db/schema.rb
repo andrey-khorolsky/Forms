@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_10_115341) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_11_171233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "entity_names", ["Survey", "Group"]
   create_enum "mem_types", ["User", "Group"]
+  create_enum "owner_names", ["User", "Group"]
 
   create_table "group_members", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.enum "member_type", null: false, enum_type: "mem_types"
@@ -28,6 +30,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_10_115341) do
   end
 
   create_table "groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.enum "owner_type", null: false, enum_type: "owner_names"
+    t.uuid "owner_id", null: false
+    t.enum "entity_type", null: false, enum_type: "entity_names"
+    t.uuid "entity_id", null: false
+    t.uuid "role_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_permissions_on_role_id"
+  end
+
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

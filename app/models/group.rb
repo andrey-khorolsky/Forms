@@ -1,4 +1,7 @@
 class Group < ApplicationRecord
+  include Owner
+  include Stored
+
   validates :name, presence: true
 
   # get the members (users or groups)

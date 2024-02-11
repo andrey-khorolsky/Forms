@@ -1,5 +1,7 @@
 class Survey < ApplicationRecord
-  validates :name, :actived, :private, presence: true
+  include Stored
+
+  validates :name, :actived, presence: true
 
   def question
     Question.find_by(survey_id: id)

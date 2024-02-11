@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Owner
+
   validates :name, presence: true
 
   has_many :group_members, as: :member
