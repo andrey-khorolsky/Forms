@@ -1,5 +1,5 @@
 class Survey < ApplicationRecord
-  # belongs_to :owner, polymorphic: true  # wait for user
+  validates :name, :actived, :private, presence: true
 
   def question
     Question.find_by(survey_id: id)
