@@ -43,6 +43,14 @@ group :development, :test do
   gem "rspec-rails", "~> 6.1.0"
 
   gem "standard"
+
+  gem "factory_bot_rails"
+
+  gem "faker"
+
+  gem "rails-erd"
+
+  gem "railroady"
 end
 
 group :development do
