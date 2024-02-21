@@ -1,0 +1,8 @@
+Description:
+    Generate a serializer for Panko
+
+Example:
+    bin/rails generate panko Car
+
+    This will create:
+        app/serializers/car_serializer.rb
