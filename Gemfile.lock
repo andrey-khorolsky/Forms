@@ -67,6 +67,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     ast (2.4.2)
+    benchmark (0.2.1)
+    bigdecimal (3.1.6)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
     bson (4.15.0)
@@ -130,6 +132,11 @@ GEM
     nio4r (2.7.0)
     nokogiri (1.16.1-x86_64-linux)
       racc (~> 1.4)
+    oj (3.16.3)
+      bigdecimal (>= 3.0)
+    panko_serializer (0.8.1)
+      activesupport
+      oj (> 3.11.0, < 4.0.0)
     parallel (1.24.0)
     parser (3.3.0.5)
       ast (~> 2.4.1)
@@ -251,11 +258,14 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  benchmark
   bootsnap
   debug
   factory_bot_rails
   faker
   mongoid
+  oj
+  panko_serializer
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors

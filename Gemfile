@@ -51,6 +51,8 @@ group :development, :test do
   gem "rails-erd"
 
   gem "railroady"
+
+  gem "benchmark"
 end
 
 group :development do
@@ -59,3 +61,7 @@ group :development do
 end
 
 gem "mongoid"
+
+gem "panko_serializer"
+
+gem "oj"
