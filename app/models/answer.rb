@@ -5,7 +5,7 @@ class Answer < ApplicationRecord
   belongs_to :survey
 
   def answer_data
-    AnswerDatum.find_by(answer_id: id)
+    AnswerDatum.find_by(id: answer_id)
   rescue Mongoid::Errors::DocumentNotFound
     nil
   end
