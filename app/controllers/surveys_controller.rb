@@ -22,14 +22,8 @@ class SurveysController < ApplicationController
 
   # DELETE /surveys/98e17521-56d6-4ecc-a903-091ff4a387c5
   def destroy
-    survey = Survey.find_by(id: params[:id])
-
-    if survey.nil?
-      render json: {}, status: 204
-    else
-      survey.destroy
-      render json: {}, status: 200
-    end
+    Survey.find(params[:id]).destroy
+    render json: {}, status: 200
   end
 
   private
