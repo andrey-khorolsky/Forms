@@ -71,3 +71,7 @@ gem "mongoid"
 gem "oj"
 
 gem "jsonapi-serializer"
+
+gem "dry-validation"
+
+gem "dry-monads"
