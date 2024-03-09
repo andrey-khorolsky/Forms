@@ -11,18 +11,18 @@ class SurveysController < ApplicationController
 
   # POST /surveys
   def create
-    survey = Survey.new(survey_params)
+    survey = SurveyRepository.new.create(survey_params)
 
-    if survey.save
-      render json: SurveySerializer.new(survey).serializable_hash.to_json
+    if survey.success?
+      render json: SurveySerializer.new(survey.success.first).serializable_hash.to_json
     else
-      render json: survey.errors, status: 422
+      render json: survey.failure, status: 422
     end
   end
 
   # DELETE /surveys/98e17521-56d6-4ecc-a903-091ff4a387c5
   def destroy
-    Survey.find(params[:id]).destroy
+    SurveyRepository.new.destroy(params[:id])
     render json: {}, status: 200
   end
 
