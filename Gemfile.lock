@@ -76,6 +76,10 @@ GEM
     choice (0.2.0)
     concurrent-ruby (1.2.3)
     crass (1.0.6)
+    database_cleaner-core (2.0.1)
+    database_cleaner-mongoid (2.0.1)
+      database_cleaner-core (~> 2.0.0)
+      mongoid
     date (3.3.4)
     debug (1.9.1)
       irb (~> 1.10)
@@ -230,6 +234,8 @@ GEM
       rexml
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    shoulda-matchers (5.3.0)
+      activesupport (>= 5.2.0)
     standard (1.33.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -259,6 +265,7 @@ PLATFORMS
 DEPENDENCIES
   benchmark
   bootsnap
+  database_cleaner-mongoid
   debug
   factory_bot_rails
   faker
@@ -272,6 +279,7 @@ DEPENDENCIES
   rails (~> 7.0.8)
   rails-erd
   rspec-rails (~> 6.1.0)
+  shoulda-matchers (~> 5.0)
   standard
   tzinfo-data
 

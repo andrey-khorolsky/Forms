@@ -60,6 +60,12 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  gem "shoulda-matchers", "~> 5.0"
+
+  gem "database_cleaner-mongoid"
+end
+
 gem "mongoid"
 
 gem "oj"
