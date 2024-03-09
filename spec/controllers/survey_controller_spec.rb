@@ -106,10 +106,18 @@ RSpec.describe SurveysController, type: :controller do
       let!(:survey) { create(:survey, question_id: question.id.to_s) }
       let(:question) { Question.create(questions: [{number: 1, text: "all right", type: "checkbox"}], questions_count: 1) }
 
-      before { delete :destroy, params: {id: survey.id} }
+      it "delete survey and questions" do
+        expect(Survey.count).to eq 1
+        expect(Question.count).to eq 1
 
-      it { should respond_with 200 }
-      it { expect(response.body).to eq "{}" }
+        delete :destroy, params: {id: survey.id}
+
+        expect(Survey.count).to eq 0
+        expect(Question.count).to eq 0
+
+        should respond_with 200
+        expect(response.body).to eq "{}"
+      end
     end
 
     context "when survey not exists" do
