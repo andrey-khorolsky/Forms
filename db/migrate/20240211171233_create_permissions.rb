@@ -14,6 +14,9 @@ class CreatePermissions < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :permissions, [:owner_type, :owner_id]
+    add_index :permissions, [:entity_type, :entity_id]
   end
 
   def down

@@ -45,8 +45,8 @@ Question.create([
 ])
 
 Survey.create([
-  {name: "Ask me about Honda", question_id: Question.first.id.to_s},
-  {name: "Fav country", question_id: Question.last.id.to_s}
+  {name: "Ask me about Honda", question_mongo_id: Question.first.id.to_s},
+  {name: "Fav country", question_mongo_id: Question.last.id.to_s}
 ])
 
 Permission.create([
@@ -65,12 +65,12 @@ Permission.create([
 
 User.all.each do |user|
   answer_data = AnswerDatum.create(questions_count: 2, field_1: ["Yes", "no", "idk, man 4r"].sample, field_2: [true, false].sample)
-  Answer.create(user: user, survey: Survey.first, answer_id: answer_data.id)
+  Answer.create(user: user, survey: Survey.first, answer_mongo_id: answer_data.id)
 end
 
 User.all[1..USER_COUNT].each do |user|
   answer_data = AnswerDatum.create(questions_count: 1, field_1: ["Africa", "China", "Brasilia)"].sample)
-  Answer.create(user: user, survey: Survey.second, answer_id: answer_data.id)
+  Answer.create(user: user, survey: Survey.second, answer_mongo_id: answer_data.id)
 end
 
 FieldType.create([{name: "text"}, {name: "checkbox"}, {name: "radio"}])

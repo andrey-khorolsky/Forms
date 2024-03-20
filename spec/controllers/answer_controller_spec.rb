@@ -13,8 +13,8 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer_data_2) { create(:answer_datum) }
 
       before do
-        create(:answer, answer_id: answer_data_1.id, survey_id: survey.id, user_id: user.id)
-        create(:answer, answer_id: answer_data_2.id, survey_id: survey.id, user_id: user.id)
+        create(:answer, answer_mongo_id: answer_data_1.id, survey_id: survey.id, user_id: user.id)
+        create(:answer, answer_mongo_id: answer_data_2.id, survey_id: survey.id, user_id: user.id)
       end
 
       it "returns all answers for survey" do
@@ -30,7 +30,7 @@ RSpec.describe AnswersController, type: :controller do
     context "when answer exists" do
       let(:all_answers) { AnswerSerializer.new(Answer.all).serializable_hash.to_json }
       let(:answer_data) { create(:answer_datum) }
-      let(:answer) { create(:answer, answer_id: answer_data.id, survey_id: survey.id, user_id: user.id) }
+      let(:answer) { create(:answer, answer_mongo_id: answer_data.id, survey_id: survey.id, user_id: user.id) }
       let(:answer_response) { AnswerSerializer.new(Answer.find(answer.id)).serializable_hash.to_json }
 
       it "return json with answer" do
@@ -133,7 +133,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe "DELETE destroy" do
     context "when answer exists" do
-      let!(:answer) { create(:answer, answer_id: answer_data.id, survey_id: survey.id, user_id: user.id) }
+      let!(:answer) { create(:answer, answer_mongo_id: answer_data.id, survey_id: survey.id, user_id: user.id) }
       let(:answer_data) { create(:answer_datum) }
 
       it "delete answer and answer_data" do

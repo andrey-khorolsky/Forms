@@ -9,7 +9,7 @@ class AnswerRepository
     answer_data = AnswerDatum.new(answer_data_params)
     return Failure(answer_data.errors.messages.to_json) unless answer_data.save
 
-    answer_params = {survey_id: params[:survey_id], answer_id: answer_data.id.to_s, user_id: params[:user_id]}
+    answer_params = {survey_id: params[:survey_id], answer_mongo_id: answer_data.id.to_s, user_id: params[:user_id]}
     answer = Answer.new(answer_params)
     unless answer.save
       answer_data.destroy

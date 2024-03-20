@@ -9,7 +9,7 @@ class AnswerDatum
   validate :schema_validation
 
   def answer
-    Answer.find_by(answer_id: id.to_s)
+    Answer.find_by(answer_mongo_id: id.to_s)
   end
 
   private

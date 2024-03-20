@@ -9,7 +9,7 @@ class Question
   validate :schema_validation
 
   def survey
-    Survey.find_by(question_id: id.to_s)
+    Survey.find_by(question_mongo_id: id.to_s)
   end
 
   private

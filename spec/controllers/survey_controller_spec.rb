@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SurveysController, type: :controller do
   describe "GET index" do
     context "all right" do
-      let!(:survey) { create(:survey, question_id: question.id.to_s) }
+      let!(:survey) { create(:survey, question_mongo_id: question.id.to_s) }
       let(:question) { Question.create(questions: [{number: 1, text: "all right", type: "checkbox"}], questions_count: 1) }
       let(:all_surveys) { SurveySerializer.new(Survey.all).serializable_hash.to_json }
 
@@ -16,7 +16,7 @@ RSpec.describe SurveysController, type: :controller do
 
   describe "GET show" do
     context "when survey exists" do
-      let!(:survey) { create(:survey, question_id: question.id.to_s) }
+      let!(:survey) { create(:survey, question_mongo_id: question.id.to_s) }
       let(:question) { Question.create(questions: [{number: 1, text: "all right", type: "checkbox"}], questions_count: 1) }
       let(:survey_response) { SurveySerializer.new(Survey.find(survey.id)).serializable_hash.to_json }
 
@@ -103,7 +103,7 @@ RSpec.describe SurveysController, type: :controller do
 
   describe "DELETE destroy" do
     context "when survey exists" do
-      let!(:survey) { create(:survey, question_id: question.id.to_s) }
+      let!(:survey) { create(:survey, question_mongo_id: question.id.to_s) }
       let(:question) { Question.create(questions: [{number: 1, text: "all right", type: "checkbox"}], questions_count: 1) }
 
       it "delete survey and questions" do
