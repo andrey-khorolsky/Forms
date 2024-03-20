@@ -1,6 +1,6 @@
 class GroupMember < ApplicationRecord
   validates :member_id, :member_type, :group_id, presence: true
-  validates :member_id, uniqueness: {scope: :group_id}
+  validates :member_id, uniqueness: {scope: :group_id, message: "Member already in the Group"}
   validates :member_id, exclusion: {in: :group_id, message: "A group cannot be a member of itself"}
   validate :cycle_of_groups
 

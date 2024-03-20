@@ -4,10 +4,13 @@ class ApplicationController < ActionController::API
   private
 
   def not_found_error
+    error_entities = []
+
+    params.each { |k, v| error_entities << ({k => v, "entity" => k.delete("_id")}) if k.include?("_id") }
+
     render json: {
       error: "Not found",
-      id: params[:id],
-      entity: params[:controller].singularize.capitalize
+      entities: error_entities
     }, status: 404
   end
 end
