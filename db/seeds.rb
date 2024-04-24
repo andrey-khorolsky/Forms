@@ -4,7 +4,14 @@
 
 USER_COUNT = 4
 
-USER_COUNT.times { User.create({name: Faker::Name.name, birthday: Faker::Date.birthday}) }
+USER_COUNT.times {
+  User.create({
+    name: Faker::Name.name,
+    birthday: Faker::Date.birthday,
+    email: Faker::Internet.email,
+    password: Faker::Internet.password
+  })
+}
 
 Role.create([{name: Role::ADMIN}, {name: Role::MANAGER}, {name: Role::GUEST}])
 

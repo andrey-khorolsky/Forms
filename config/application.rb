@@ -26,5 +26,17 @@ module Forms
     config.api_only = true
 
     config.generators.orm = :active_record
+
+    # config.session_store :cookie_store, key: "_interslice_session"
+    config.middleware.use ActionDispatch::Cookies  # Required for all session management
+    # config.middleware.use ActionDispatch::Session::CookieStore
+    config.session_store :cookie_store, key: "_Forms_session_#{Rails.env}"
+
+    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
+    config.middleware.use ActionDispatch::Flash
+    # config.middleware.insert_before "RescueFromInvalidAuthenticityToken", OmniAuth::Builder
+
+    config.middleware.use ActionDispatch::Session::CacheStore
+    # config.middleware.use ActionDispatch::Session::MemCacheStore
   end
 end

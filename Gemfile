@@ -53,6 +53,8 @@ group :development, :test do
   gem "railroady"
 
   gem "benchmark"
+
+  gem "dotenv", "~> 3.1"
 end
 
 group :development do
@@ -75,3 +77,9 @@ gem "jsonapi-serializer"
 gem "dry-validation"
 
 gem "dry-monads"
+
+gem "devise"
+gem "devise-jwt"
+gem "omniauth"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-google-oauth2"
