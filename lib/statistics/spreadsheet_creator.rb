@@ -6,9 +6,19 @@ module Statistics
     end
 
     def create_spreadsheet
-      headers = @survey.question.get_questions_text
-      data = @answers.map { _1.answer_data.get_results }
+      headers, data = get_headers_data
       SpreadsheetArchitect.to_xlsx(headers: headers, data: data)
+    end
+
+    def create_csv
+      headers, data = get_headers_data
+      SpreadsheetArchitect.to_csv(headers: headers, data: data)
+    end
+
+    private
+
+    def get_headers_data
+      [@survey.question.get_questions_text, @answers.map { _1.answer_data.get_results }]
     end
   end
 end

@@ -3,7 +3,13 @@ class AnswerSpreadsheetsController < ApplicationController
     survey = Survey.find(params[:survey_id])
     raise ActiveRecord::RecordNotFound unless survey.answers.present?
 
-    spreadsheet = ::Statistics::SpreadsheetCreator.new(survey).create_spreadsheet
-    render xlsx: spreadsheet, filename: "#{survey.name} - Ответы"
+    filename = "#{survey.name} - Ответы"
+
+    case params[:format]
+    when "xlsx"
+      render xlsx: ::Statistics::SpreadsheetCreator.new(survey).create_spreadsheet, filename: filename
+    when "csv"
+      render csv: ::Statistics::SpreadsheetCreator.new(survey).create_csv, filename: filename
+    end
   end
 end
