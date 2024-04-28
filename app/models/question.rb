@@ -12,6 +12,10 @@ class Question
     Survey.find_by(question_mongo_id: id.to_s)
   end
 
+  def get_questions_text
+    questions.sort_by { _1["number"] }.map { _1["text"] }
+  end
+
   private
 
   def schema_validation

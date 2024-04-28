@@ -75,3 +75,5 @@ gem "jsonapi-serializer"
 gem "dry-validation"
 
 gem "dry-monads"
+
+gem "spreadsheet_architect"
