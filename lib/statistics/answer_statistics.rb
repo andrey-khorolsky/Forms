@@ -16,6 +16,7 @@ module Statistics
           answers: get_answers(question[:number])
         }
       end
+        .merge(get_timechart)
     end
 
     private
@@ -42,6 +43,10 @@ module Statistics
           percent: (ans_count / answers_count.to_f) * 100
         }]
       end.to_h
+    end
+
+    def get_timechart
+      @answers.pluck(:created_at).map { _1.to_fs(:iso8601) }.uniq.sort.map.with_index { |date, ind| {date => ind + 1} }
     end
   end
 end
