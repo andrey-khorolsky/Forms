@@ -1,5 +1,5 @@
 class AnswerStatisticsController < ApplicationController
-  def index
+  def show
     survey = Survey.find(params[:survey_id])
     raise ActiveRecord::RecordNotFound unless survey.answers.present?
 

@@ -8,7 +8,7 @@ module Statistics
     def get_statistic
       return nil if @survey.question.nil?
 
-      @survey.question.questions.map do |question|
+      statistic = @survey.question.questions.map do |question|
         {
           number: question[:number],
           answer_count: get_answer_count(question[:number]),
@@ -16,7 +16,11 @@ module Statistics
           answers: get_answers(question[:number])
         }
       end
-        .merge(get_timechart)
+
+      {
+        answers_statistics: statistic,
+        timechart: get_timechart
+      }
     end
 
     private
