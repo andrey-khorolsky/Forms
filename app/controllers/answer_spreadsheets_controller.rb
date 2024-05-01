@@ -7,7 +7,7 @@ class AnswerSpreadsheetsController < ApplicationController
 
     case params[:format]
     when "xlsx"
-      render xlsx: ::Statistics::SpreadsheetCreator.new(survey).create_spreadsheet, filename: filename
+      render xlsx: ::Statistics::SpreadsheetCreator.new(survey).create_xlsx, filename: filename
     when "csv"
       render csv: ::Statistics::SpreadsheetCreator.new(survey).create_csv, filename: filename
     when "xml"

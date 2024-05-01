@@ -5,7 +5,7 @@ module Statistics
       @answers = survey.answers
     end
 
-    def create_spreadsheet
+    def create_xlsx
       headers, data = get_headers_data
       SpreadsheetArchitect.to_xlsx(headers: headers, data: data)
     end
