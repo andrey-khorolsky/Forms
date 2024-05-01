@@ -10,6 +10,8 @@ class AnswerSpreadsheetsController < ApplicationController
       render xlsx: ::Statistics::SpreadsheetCreator.new(survey).create_spreadsheet, filename: filename
     when "csv"
       render csv: ::Statistics::SpreadsheetCreator.new(survey).create_csv, filename: filename
+    when "xml"
+      render xml: ::Statistics::SpreadsheetCreator.new(survey).create_xml, filename: filename
     end
   end
 end

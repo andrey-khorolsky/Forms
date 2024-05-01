@@ -15,6 +15,16 @@ module Statistics
       SpreadsheetArchitect.to_csv(headers: headers, data: data)
     end
 
+    # maybe should move to another location
+    def create_xml
+      headers, data = get_headers_data
+      data.map do |row|
+        headers.map.with_index do |item, ind|
+          [item.delete("?"), row[ind]]
+        end.to_h
+      end.to_xml(root: "answers")
+    end
+
     private
 
     def get_headers_data
