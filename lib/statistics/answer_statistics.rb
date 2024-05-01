@@ -1,14 +1,15 @@
 module Statistics
   class AnswerStatistics
-    def initialize(survey)
+    def initialize(survey, date_from = nil, date_to = nil)
       @survey = survey
-      @answers = survey.answers
+      @answers = survey.answers.where(get_date_range(date_from, date_to))
     end
 
-    def get_statistic
+    def get_statistic(except_question_numbers)
       return nil if @survey.question.nil?
+      except_question_numbers = except_question_numbers.nil? ? [] : except_question_numbers.split(",").map(&:to_i)
 
-      statistic = @survey.question.questions.map do |question|
+      statistic = @survey.question.questions.reject { _1[:number].in?(except_question_numbers) }.map do |question|
         {
           number: question[:number],
           answer_count: get_answer_count(question[:number]),
@@ -51,6 +52,12 @@ module Statistics
 
     def get_timechart
       @answers.pluck(:created_at).map { _1.to_fs(:iso8601) }.uniq.sort.map.with_index { |date, ind| {date => ind + 1} }
+    end
+
+    def get_date_range(date_from, date_to)
+      return {} if date_from.nil? && date_to.nil?
+
+      {created_at: (date_from..date_to)}
     end
   end
 end
