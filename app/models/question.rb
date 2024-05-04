@@ -16,6 +16,10 @@ class Question
     questions.sort_by { _1["number"] }.map { _1["text"] }
   end
 
+  def get_question_types
+    questions.map { [_1[:number], _1[:type]] }.to_h
+  end
+
   private
 
   def schema_validation

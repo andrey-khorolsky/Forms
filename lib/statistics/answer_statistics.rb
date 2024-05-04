@@ -15,13 +15,20 @@ module Statistics
           answer_count: get_answer_count(question[:number]),
           different_answer_count: get_different_answer_count(question[:number]),
           average_value: get_average_value(question[:number]),
+          min_value: get_min_value(question[:number]),
+          max_value: get_max_value(question[:number]),
           answers: get_answers(question[:number])
         }
       end
 
       {
+        all_answer_count: @answers.count,
         answers_statistics: statistic,
-        timechart: get_timechart
+        time_statistics: {
+          first_answer: @answers.pluck(:created_at).min,
+          last_answer: @answers.pluck(:created_at).max,
+          timechart: get_timechart
+        }
       }
     end
 
@@ -37,10 +44,22 @@ module Statistics
     end
 
     def get_average_value(question_number)
-      return nil if ["integer", "float"].exclude?(@survey.question.questions.detect { _1[:number] == question_number }[:type])
+      return nil unless question_digital_type?(question_number)
 
       all_answers = get_answer_by_question_number(question_number)
       all_answers.sum { _1[:result] } / all_answers.count.to_f
+    end
+
+    def get_min_value(question_number)
+      return nil unless question_digital_type?(question_number)
+
+      get_answer_by_question_number(question_number).min { _1[:result] }
+    end
+
+    def get_max_value(question_number)
+      return nil unless question_digital_type?(question_number)
+
+      get_answer_by_question_number(question_number).max { _1[:result] }
     end
 
     def get_answers(question_number)
@@ -73,6 +92,10 @@ module Statistics
       Rails.cache.fetch(question_number) do
         @answers.map { _1.answer_data.answer_data.detect { |a| a[:number] == question_number } }.compact
       end
+    end
+
+    def question_digital_type?(question_number)
+      ["integer", "float"].include?(@survey.question.get_question_types[question_number])
     end
   end
 end
