@@ -5,9 +5,9 @@ class AnswerStatisticsController < ApplicationController
 
     permitted_params = answer_params
     statistics = ::Statistics::AnswerStatistics.new(survey, permitted_params[:date_from], permitted_params[:date_to])
-      .get_statistic(permitted_params[:except_question_numbers])
 
-    render json: statistics
+    render json: AnswerStatisticsSerializer.new(context: {except_question_numbers: permitted_params[:except_question_numbers]})
+      .serialize_to_json(statistics)
   end
 
   private
