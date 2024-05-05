@@ -24,16 +24,10 @@ module Statistics
       all_answers.sum { _1[:result] } / all_answers.count.to_f
     end
 
-    def get_min_value(question_number)
+    def get_min_max_value(question_number, criteria)
       return nil unless question_digital_type?(question_number)
 
-      get_answer_by_question_number(question_number).min { _1[:result] }[:result]
-    end
-
-    def get_max_value(question_number)
-      return nil unless question_digital_type?(question_number)
-
-      get_answer_by_question_number(question_number).max { _1[:result] }[:result]
+      get_answer_by_question_number(question_number).map { _1[:result] }.send(criteria)
     end
 
     def get_answers(question_number)
@@ -51,10 +45,21 @@ module Statistics
       end.to_h
     end
 
+    def get_answer_time(criteria)
+      @answers.map { |a| a.answer_data[:answer_time] }.send(criteria)
+    end
+
+    def get_average_answer_time
+      all_answer_time = @answers.map(&:answer_data).pluck(:answer_time).compact.map(&:to_i)
+      all_answer_time.sum / all_answer_time.compact.count.to_f
+    end
+
     def get_timechart
       answer_dates = @answers.pluck(:created_at)
       answer_dates.uniq.sort.map { |date| {date => answer_dates.count { _1 <= date }} }
     end
+
+    private
 
     def get_date_range(date_from, date_to)
       return {} if date_from.nil? && date_to.nil?

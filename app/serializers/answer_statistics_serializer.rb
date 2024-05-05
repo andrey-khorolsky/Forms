@@ -18,8 +18,8 @@ class AnswerStatisticsSerializer < Panko::Serializer
         answer_count: object.get_answer_count(question[:number]),
         different_answer_count: object.get_different_answer_count(question[:number]),
         average_value: object.get_average_value(question[:number]),
-        min_value: object.get_min_value(question[:number]),
-        max_value: object.get_max_value(question[:number]),
+        min_value: object.get_min_max_value(question[:number], :min),
+        max_value: object.get_min_max_value(question[:number], :max),
         answers: object.get_answers(question[:number])
       }
     end
@@ -29,6 +29,9 @@ class AnswerStatisticsSerializer < Panko::Serializer
     {
       first_answer: object.answers.pluck(:created_at).min,
       last_answer: object.answers.pluck(:created_at).max,
+      min_answer_time: object.get_answer_time(:min),
+      max_answer_time: object.get_answer_time(:max),
+      average_answer_time: object.get_average_answer_time,
       timechart: object.get_timechart
     }
   end
