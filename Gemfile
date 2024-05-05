@@ -81,3 +81,7 @@ gem "spreadsheet_architect"
 gem "panko_serializer"
 
 gem "carrierwave", "~> 3.0"
+
+gem "devise", "~> 4.9"
+
+gem "devise-jwt"
