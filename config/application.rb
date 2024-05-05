@@ -26,5 +26,7 @@ module Forms
     config.api_only = true
 
     config.generators.orm = :active_record
+
+    config.autoload_paths << Rails.root.join("lib")
   end
 end

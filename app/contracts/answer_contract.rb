@@ -1,6 +1,7 @@
 class AnswerContract < Dry::Validation::Contract
   params do
     required(:answers_count).filled(:integer)
+    optional(:answer_time).filled(:string)
     required(:answer_data).array(:hash) do
       required(:number).filled(:integer)
       required(:result).filled(:string)

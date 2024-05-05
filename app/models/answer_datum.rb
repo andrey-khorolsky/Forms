@@ -12,6 +12,10 @@ class AnswerDatum
     Answer.find_by(answer_mongo_id: id.to_s)
   end
 
+  def get_results
+    answer_data.sort_by { _1["number"] }.map { _1["result"] }
+  end
+
   private
 
   def schema_validation
