@@ -79,3 +79,5 @@ gem "dry-monads"
 gem "spreadsheet_architect"
 
 gem "panko_serializer"
+
+gem "carrierwave", "~> 3.0"

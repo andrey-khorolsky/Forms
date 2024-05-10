@@ -76,6 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_193556) do
     t.string "question_mongo_id", null: false
     t.boolean "actived", default: true, null: false
     t.boolean "private", default: false, null: false
+    t.string "wallpaper"
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at", null: false
