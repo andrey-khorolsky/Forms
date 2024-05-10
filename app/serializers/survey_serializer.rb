@@ -12,4 +12,8 @@ class SurveySerializer
   has_many :owners do |object|
     object.owners
   end
+
+  link :self do |object|
+    "/surveys/#{object.id}"
+  end
 end
