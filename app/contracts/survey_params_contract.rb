@@ -9,6 +9,8 @@ class SurveyParamsContract < Dry::Validation::Contract
   end
 
   rule(:wallpaper) do
-    key.failure("It's not a png or jpeg file") unless value.content_type.in?(["image/png", "image/jpeg"])
+    if value.present? && !value.content_type.in?(["image/png", "image/jpeg"])
+      key.failure("It's not a png or jpeg file")
+    end
   end
 end
