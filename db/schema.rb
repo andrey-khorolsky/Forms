@@ -73,11 +73,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_193556) do
 
   create_table "surveys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
+    t.string "description"
+    t.string "wallpaper"
     t.string "question_mongo_id", null: false
     t.boolean "actived", default: true, null: false
     t.boolean "private", default: false, null: false
+    t.boolean "anonymous", default: false, null: false
     t.datetime "start_date"
     t.datetime "end_date"
+    t.string "completion_time"
+    t.string "completion_by_person"
+    t.string "needed_votes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

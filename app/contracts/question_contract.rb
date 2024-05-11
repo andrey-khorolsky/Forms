@@ -2,10 +2,18 @@ class QuestionContract < Dry::Validation::Contract
   params do
     required(:questions_count).filled(:integer)
     required(:questions).array(:hash) do
+      required(:id).filled(:string)
       required(:number).filled(:integer)
       required(:type).filled(:string)
       required(:text).filled(:string)
       optional(:required).filled(:bool)
+      optional(:hint).filled(:string)
+
+      optional(:subform).array(:hash) do
+        required(:id).filled(:string)
+        required(:number).filled(:integer)
+        required(:text).filled(:string)
+      end
     end
   end
 

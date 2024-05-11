@@ -1,6 +1,8 @@
 class Survey < ApplicationRecord
   include Stored
 
+  mount_uploader :wallpaper, SurveyWallpaperUploader
+
   validates :name, :actived, :question_mongo_id, presence: true
 
   has_many :answers, dependent: :destroy
