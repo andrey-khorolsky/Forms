@@ -85,3 +85,5 @@ gem "carrierwave", "~> 3.0"
 gem "devise", "~> 4.9"
 
 gem "devise-jwt"
+
+gem "action_policy"
