@@ -13,4 +13,8 @@ class Survey < ApplicationRecord
   rescue Mongoid::Errors::DocumentNotFound
     nil
   end
+
+  def can_user_answer?(user_id)
+    true if completion_by_person.nil? || (completion_by_person < answers.where(user_id: user_id).count)
+  end
 end
