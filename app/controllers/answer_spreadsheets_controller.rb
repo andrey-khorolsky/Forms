@@ -1,7 +1,11 @@
 class AnswerSpreadsheetsController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     survey = Survey.find(params[:survey_id])
     raise ActiveRecord::RecordNotFound unless survey.answers.present?
+
+    authorize! survey, to: :get_statistics?
 
     filename = "#{survey.name} - Ответы"
 

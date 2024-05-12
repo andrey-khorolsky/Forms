@@ -11,5 +11,25 @@ module Owner
     def entities
       entity_groups + entity_surveys
     end
+
+    def admin_for?(entity_id)
+      role_for_entity?(entity_id) == Role::ADMIN
+    end
+
+    def manager_for?(entity_id)
+      role_for_entity?(entity_id) == Role::MANAGER
+    end
+
+    def guest_for?(entity_id)
+      role_for_entity?(entity_id) == Role::GUEST
+    end
+
+    def manager_or_admin?(entity_id)
+      role_for_entity?(record.id).in?([Role::ADMIN, Role::MANAGER])
+    end
+
+    def role_for_entity?(entity_id)
+      permissions_as_owner.find_by(entity_id: entity_id)&.role&.name
+    end
   end
 end
