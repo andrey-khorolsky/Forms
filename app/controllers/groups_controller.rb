@@ -13,11 +13,15 @@ class GroupsController < ApplicationController
   def create
     group = Group.new(group_params)
 
-    if group.save
+    ActiveRecord::Base.transaction do
+      group.save
+      group.add_admin
+
       render json: GroupSerializer.new(group).serializable_hash.to_json, status: 200
-    else
-      render json: group.errors, status: 422
     end
+
+    group.valid?
+    render json: group.errors, status: 422
   end
 
   # PATCH/PUT /groups/b285ce14-628d-4a31-aac3-7b731c7a6ca0
