@@ -24,7 +24,7 @@ class AnswersController < ApplicationController
       render json: {message: "User has answered the allowed number of times"}, status: 405
     end
 
-    answer = AnswerRepository.new.create(answer_params.merge({survey_id: params[:survey_id], user_id: params[:user_id]}))
+    answer = AnswerRepository.new.create(answer_params.merge({survey_id: params[:survey_id], user_id: current_user.id}))
 
     if answer.success?
       render json: AnswerSerializer.new(answer.success.first).serializable_hash.to_json, status: 200
@@ -48,6 +48,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:user_id, :answers_count, answer_data: [:number, :result])
+    params.require(:answer).permit(:answers_count, answer_data: [:number, :result])
   end
 end
