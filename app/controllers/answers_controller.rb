@@ -1,19 +1,30 @@
 class AnswersController < ApplicationController
-  before_action :set_survey, only: [:index, :show]
+  before_action :authenticate_user!
+  before_action :set_survey, only: [:index, :show, :create]
 
   # GET /surveys/survey_uuid_id/answers
   def index
+    authorize! @survey, to: :index_answer?
     render json: AnswerSerializer.new(@survey.answers).serializable_hash.to_json
   end
 
   # GET /surveys/survey_uuid_id/answers/uuid_id
   def show
-    render json: AnswerSerializer.new(@survey.answers.find(params[:id])).serializable_hash.to_json
+    answer = @survey.answers.find(params[:id])
+    authorize! answer
+
+    render json: AnswerSerializer.new(answer).serializable_hash.to_json
   end
 
   # POST /surveys/survey_uuid_id/answers
   def create
-    answer = AnswerRepository.new.create(answer_params.merge({survey_id: params[:survey_id], user_id: params[:user_id]}))
+    authorize! @survey, to: :create_answer?
+
+    unless @survey.can_user_answer?(current_user.id)
+      render json: {message: "User has answered the allowed number of times"}, status: 405
+    end
+
+    answer = AnswerRepository.new.create(answer_params.merge({survey_id: params[:survey_id], user_id: current_user.id}))
 
     if answer.success?
       render json: AnswerSerializer.new(answer.success.first).serializable_hash.to_json, status: 200
@@ -24,6 +35,8 @@ class AnswersController < ApplicationController
 
   # DELETE /surveys/survey_uuid_id/answers/uuid_id
   def destroy
+    authorize! Answer.find(params[:id])
+
     AnswerRepository.new.destroy(params[:id])
     render json: {}, status: 200
   end
@@ -35,6 +48,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:user_id, :answers_count, answer_data: [:number, :result])
+    params.require(:answer).permit(:answers_count, answer_data: [:number, :result])
   end
 end

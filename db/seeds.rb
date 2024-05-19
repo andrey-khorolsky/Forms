@@ -4,7 +4,14 @@
 
 USER_COUNT = 4
 
-USER_COUNT.times { User.create({name: Faker::Name.name, birthday: Faker::Date.birthday}) }
+USER_COUNT.times {
+  User.create(
+    name: Faker::Name.name,
+    birthday: Faker::Date.birthday,
+    email: Faker::Internet.email,
+    password: Faker::Internet.password
+  )
+}
 
 Role.create([{name: Role::ADMIN}, {name: Role::MANAGER}, {name: Role::GUEST}])
 
@@ -27,26 +34,23 @@ GroupMember.create([
   {member: Group.third, group_id: Group.first.id}
 ])
 
-Question.create([
-  {"questions_count" => 2,
-   "1" => {
-     "type" => "text",
-     "question" => "Do you like Honda Civic Type R?"
-   },
-   "2" => {
-     "type" => "checkbox",
-     "question" => "I have a Honda Civic Type R"
-   }},
-  {"questions_count" => 1,
-   "1" => {
-     "type" => "text",
-     "question" => "What do you prefer: Africa or China?"
-   }}
+questions = Question.create([
+  {questions_count: 3,
+   questions: [
+     {"id" => "1", "number" => 1, "type" => "text", "text" => "fav artist?", "required" => true},
+     {"id" => "2", "number" => 2, "type" => "text", "text" => "fav song?", "required" => true},
+     {"id" => "3", "number" => 3, "type" => "integer", "text" => "how many times do you listening this song?"}
+   ]},
+  {questions_count: 2,
+   questions: [
+     {"id" => "1", "number" => 1, "type" => "text", "text" => "Do you like Honda Civic Type R?"},
+     {"id" => "2", "number" => 2, "type" => "checkbox", "text" => "I have a Honda Civic Type R"}
+   ]}
 ])
 
-Survey.create([
-  {name: "Ask me about Honda", question_mongo_id: Question.first.id.to_s},
-  {name: "Fav country", question_mongo_id: Question.last.id.to_s}
+surveys = Survey.create([
+  {name: "Ask me about Honda", question_mongo_id: questions.second.id.to_s},
+  {name: "About music", question_mongo_id: questions.first.id.to_s}
 ])
 
 Permission.create([
@@ -64,13 +68,31 @@ Permission.create([
 ])
 
 User.all.each do |user|
-  answer_data = AnswerDatum.create(questions_count: 2, field_1: ["Yes", "no", "idk, man 4r"].sample, field_2: [true, false].sample)
-  Answer.create(user: user, survey: Survey.first, answer_mongo_id: answer_data.id)
+  answer_data = AnswerDatum.create(
+    answers_count: 2,
+    answer_data: [{number: 1, result: ["Yes", "no", "idk, man 4r"].sample}, {number: 2, result: [true, false].sample.to_s}]
+  )
+  Answer.create(user: user, survey: surveys.first, answer_mongo_id: answer_data.id)
 end
 
-User.all[1..USER_COUNT].each do |user|
-  answer_data = AnswerDatum.create(questions_count: 1, field_1: ["Africa", "China", "Brasilia)"].sample)
-  Answer.create(user: user, survey: Survey.second, answer_mongo_id: answer_data.id)
+[
+  ["Lil Peep", "Honestly"],
+  ["Suicideboys", "O Pana!"],
+  ["Yung Lean", "Agony"]
+].each do |artist, song|
+  answer_data = AnswerDatum.create(
+    answers_count: 3,
+    answer_data: [{"number" => 1, "result" => artist}, {"number" => 2, "result" => song}, {"number" => 3, "result" => rand(1..20).to_s}],
+    answer_time: rand(30..700).to_s
+  )
+  Answer.create(user: User.all[rand(4)], survey: surveys.last, answer_mongo_id: answer_data.id)
 end
+
+answer_data = AnswerDatum.create(
+  answers_count: 2,
+  answer_data: [{"number" => 1, "result" => "Kanye West"}, {"number" => 2, "result" => "Donda chant"}],
+  answer_time: "80"
+)
+Answer.create(user: User.all[rand(4)], survey: surveys.last, answer_mongo_id: answer_data.id)
 
 FieldType.create([{name: "text"}, {name: "checkbox"}, {name: "radio"}])

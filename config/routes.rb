@@ -3,6 +3,18 @@ Rails.application.routes.draw do
     resources :permissions
   end
 
+  devise_for :users,
+    path: "",
+    path_names: {
+      sign_in: "login",
+      sign_out: "logout",
+      registration: "signup"
+    },
+    controllers: {
+      sessions: "users/sessions",
+      registrations: "users/registrations"
+    }
+
   resources :surveys, only: [:index, :show, :create, :destroy], concerns: :permissionable do
     resources :answers, only: [:index, :show, :create, :destroy]
 
