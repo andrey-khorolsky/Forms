@@ -4,6 +4,7 @@ class Survey < ApplicationRecord
   mount_uploader :wallpaper, SurveyWallpaperUploader
 
   validates :name, :actived, :question_mongo_id, presence: true
+  validate :completion_by_person, :positive_completion_by_person
 
   has_many :answers, dependent: :destroy
 
@@ -15,6 +16,12 @@ class Survey < ApplicationRecord
   end
 
   def can_user_answer?(user_id)
-    true if completion_by_person.nil? || (completion_by_person < answers.where(user_id: user_id).count)
+    completion_by_person.nil? || (completion_by_person.to_i < answers.where(user_id: user_id).count)
+  end
+
+  private
+
+  def positive_completion_by_person
+    errors.add(:completion_by_person, "Must be greater than 0") unless completion_by_person.to_i > 0
   end
 end
