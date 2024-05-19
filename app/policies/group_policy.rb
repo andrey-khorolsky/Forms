@@ -26,4 +26,8 @@ class GroupPolicy < ApplicationPolicy
   def create_member?
     user.admin_for?(record.id)
   end
+
+  def create_permission?
+    user.admin_for?(record.id)
+  end
 end

@@ -10,4 +10,8 @@ class SurveyPolicy < ApplicationPolicy
   def get_statistics?
     user.manager_or_admin?(record.id)
   end
+
+  def create_permission?
+    user.admin_for?(record.id)
+  end
 end
