@@ -21,7 +21,7 @@ module Statistics
       return nil unless question_digital_type?(question_number)
 
       all_answers = get_answer_by_question_number(question_number)
-      all_answers.sum { _1[:result] } / all_answers.count.to_f
+      all_answers.sum { _1[:result] }.to_i / all_answers.count.to_f
     end
 
     def get_min_max_value(question_number, criteria)

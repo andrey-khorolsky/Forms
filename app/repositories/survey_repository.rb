@@ -1,7 +1,7 @@
 class SurveyRepository
   include Dry::Monads[:result]
 
-  def create(params)
+  def create(params, user)
     params_result = SurveyParamsContract.new.call(params.to_h)
     return Failure(params_result.errors.messages.to_json) unless params_result.success?
 
@@ -14,7 +14,7 @@ class SurveyRepository
       @survey = Survey.new(survey_params)
       return Failure(@survey.errors.messages.to_json) unless @survey.save
 
-      @survey.add_admin
+      @survey.add_admin(user)
     end
 
     Success([@survey, @question])

@@ -20,7 +20,7 @@ class SurveysController < ApplicationController
   def create
     authorize! Survey
 
-    survey = SurveyRepository.new.create(survey_params)
+    survey = SurveyRepository.new.create(survey_params, current_user)
 
     if survey.success?
       render json: SurveySerializer.new(survey.success.first).serializable_hash.to_json

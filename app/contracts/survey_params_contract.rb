@@ -9,11 +9,11 @@ class SurveyParamsContract < Dry::Validation::Contract
     optional(:anonymous).filled(:bool)
 
     optional(:start_date).filled(:date_time)
-    optional(:end_date).filled(:date_time)
+    optional(:end_date).maybe(:date_time)
 
-    optional(:completion_time).filled(:string)
-    optional(:completion_by_person).filled(:string)
-    optional(:needed_votes).filled(:string)
+    optional(:completion_time).maybe(:string)
+    optional(:completion_by_person).maybe(:string)
+    optional(:needed_votes).maybe(:string)
   end
 
   rule(:wallpaper) do
