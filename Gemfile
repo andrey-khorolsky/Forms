@@ -53,6 +53,8 @@ group :development, :test do
   gem "railroady"
 
   gem "benchmark"
+
+  gem "dotenv"
 end
 
 group :development do

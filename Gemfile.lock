@@ -112,6 +112,7 @@ GEM
       devise (~> 4.0)
       warden-jwt_auth (~> 0.8)
     diff-lcs (1.5.1)
+    dotenv (3.1.2)
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
       zeitwerk (~> 2.6)
@@ -372,6 +373,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   devise-jwt
+  dotenv
   dry-monads
   dry-validation
   factory_bot_rails
