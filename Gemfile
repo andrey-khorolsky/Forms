@@ -89,3 +89,5 @@ gem "devise", "~> 4.9"
 gem "devise-jwt"
 
 gem "action_policy"
+
+gem "data_migrate"

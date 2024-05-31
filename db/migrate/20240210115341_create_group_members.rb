@@ -6,12 +6,12 @@ class CreateGroupMembers < ActiveRecord::Migration[7.0]
       t.enum :member_type, enum_type: :mem_types, null: false
       t.uuid :member_id, null: false
 
-      t.references :group, type: :uuid, null: false
+      t.references :group, type: :uuid, null: false, foreign_key: true
 
       t.timestamps
     end
 
-    add_index :group_members, [:member_type, :member_id]
+    add_index :group_members, [:member_id, :member_type]
   end
 
   def down
