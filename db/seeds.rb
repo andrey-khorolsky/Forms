@@ -13,8 +13,6 @@ USER_COUNT.times {
   )
 }
 
-Role.create([{name: Role::ADMIN}, {name: Role::MANAGER}, {name: Role::GUEST}])
-
 Group.create([
   {name: "aqua"},
   {name: "am"},

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_26_153733) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_05_163229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_26_153733) do
     t.datetime "updated_at", null: false
     t.index ["survey_id"], name: "index_answers_on_survey_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "field_types", force: :cascade do |t|
