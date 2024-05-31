@@ -10,13 +10,13 @@ class CreatePermissions < ActiveRecord::Migration[7.0]
       t.enum :entity_type, enum_type: :entity_names, null: false
       t.uuid :entity_id, null: false
 
-      t.references :role, type: :uuid, null: false
+      t.references :role, type: :uuid, null: false, foreign_key: true
 
       t.timestamps
     end
 
-    add_index :permissions, [:owner_type, :owner_id]
-    add_index :permissions, [:entity_type, :entity_id]
+    add_index :permissions, [:owner_id, :owner_type]
+    add_index :permissions, [:entity_id, :entity_type]
   end
 
   def down

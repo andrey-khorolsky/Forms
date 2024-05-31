@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_05_163229) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_group_members_on_group_id"
-    t.index ["member_type", "member_id"], name: "index_group_members_on_member_type_and_member_id"
+    t.index ["member_id", "member_type"], name: "index_group_members_on_member_id_and_member_type"
   end
 
   create_table "groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -63,8 +63,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_05_163229) do
     t.uuid "role_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entity_type", "entity_id"], name: "index_permissions_on_entity_type_and_entity_id"
-    t.index ["owner_type", "owner_id"], name: "index_permissions_on_owner_type_and_owner_id"
+    t.index ["entity_id", "entity_type"], name: "index_permissions_on_entity_id_and_entity_type"
+    t.index ["owner_id", "owner_type"], name: "index_permissions_on_owner_id_and_owner_type"
     t.index ["role_id"], name: "index_permissions_on_role_id"
   end
 
@@ -107,4 +107,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_05_163229) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answers", "surveys"
+  add_foreign_key "answers", "users"
+  add_foreign_key "group_members", "groups"
+  add_foreign_key "permissions", "roles"
 end
