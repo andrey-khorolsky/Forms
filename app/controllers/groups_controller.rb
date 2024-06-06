@@ -1,24 +1,24 @@
 class GroupsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_group, only: [:show, :update, :destroy]
 
   # GET /groups
   def index
-    authorize! Group
+    # authorize! Group
 
     render json: GroupSerializer.new(Group.all).serializable_hash.to_json
   end
 
   # GET /groups/b285ce14-628d-4a31-aac3-7b731c7a6ca0
   def show
-    authorize! @group
+    # authorize! @group
 
     render json: GroupSerializer.new(@group).serializable_hash.to_json
   end
 
   # POST /groups
   def create
-    authorize! Group
+    # authorize! Group
 
     group = Group.new(group_params)
 
@@ -35,7 +35,7 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/b285ce14-628d-4a31-aac3-7b731c7a6ca0
   def update
-    authorize! @group
+    # authorize! @group
 
     if @group.update(group_params)
       render json: GroupSerializer.new(@group).serializable_hash.to_json, status: 200
@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
 
   # DELETE /groups/b285ce14-628d-4a31-aac3-7b731c7a6ca0
   def destroy
-    authorize! @group
+    # authorize! @group
 
     @group.destroy
     render json: {}, status: 200

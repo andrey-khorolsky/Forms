@@ -1,9 +1,9 @@
 class SurveysController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   # GET /surveys
   def index
-    authorize! Survey
+    # authorize! Survey
 
     render json: SurveySerializer.new(Survey.all).serializable_hash.to_json
   end
@@ -11,16 +11,16 @@ class SurveysController < ApplicationController
   # GET /surveys/98e17521-56d6-4ecc-a903-091ff4a387c5
   def show
     survey = Survey.find(params[:id])
-    authorize! survey
+    # authorize! survey
 
     render json: SurveySerializer.new(survey).serializable_hash.to_json
   end
 
   # POST /surveys
   def create
-    authorize! Survey
+    # authorize! Survey
 
-    survey = SurveyRepository.new.create(survey_params, current_user)
+    survey = SurveyRepository.new.create(survey_params, User.last)
 
     if survey.success?
       render json: SurveySerializer.new(survey.success.first).serializable_hash.to_json
@@ -31,7 +31,7 @@ class SurveysController < ApplicationController
 
   # DELETE /surveys/98e17521-56d6-4ecc-a903-091ff4a387c5
   def destroy
-    authorize! Survey.find(params[:id])
+    # authorize! Survey.find(params[:id])
 
     SurveyRepository.new.destroy(params[:id])
     render json: {}, status: 200
