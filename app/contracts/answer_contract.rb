@@ -13,7 +13,7 @@ class AnswerContract < Dry::Validation::Contract
     required(:answers_count).filled(:integer)
     optional(:answer_time).filled(:string)
     required(:answer_data).array(:hash) do
-      schema OneAnswer | MultipleAnswer
+      OneAnswer.or(MultipleAnswer)
     end
   end
 
