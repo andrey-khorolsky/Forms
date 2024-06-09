@@ -4,7 +4,7 @@ class AnswerContract < Dry::Validation::Contract
     optional(:answer_time).filled(:string)
     required(:answer_data).array(:hash) do
       required(:number).filled(:integer)
-      # required(:result)
+      required(:result).filled(:string | :array)
     end
   end
 
