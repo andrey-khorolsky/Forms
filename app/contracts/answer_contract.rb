@@ -1,10 +1,19 @@
 class AnswerContract < Dry::Validation::Contract
+  OneAnswer = Dry::Schema.Params do
+    required(:number).filled(:integer)
+    required(:result).filled(:string)
+  end
+
+  MultipleAnswer = Dry::Schema.Params do
+    required(:number).filled(:integer)
+    required(:result).array(:string)
+  end
+
   params do
     required(:answers_count).filled(:integer)
     optional(:answer_time).filled(:string)
     required(:answer_data).array(:hash) do
-      required(:number).filled(:integer)
-      required(:result).filled(:string | :array)
+      OneAnswer.or(MultipleAnswer)
     end
   end
 
