@@ -24,7 +24,7 @@ class GroupsController < ApplicationController
 
     ActiveRecord::Base.transaction do
       group.save
-      group.add_admin
+      group.add_admin(User.last)
 
       render json: GroupSerializer.new(group).serializable_hash.to_json, status: 200
     end
