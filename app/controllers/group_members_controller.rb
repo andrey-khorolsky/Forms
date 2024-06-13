@@ -1,4 +1,4 @@
-class GroupMembersController < ApplicationController
+class GroupMembersController < PaginationController
   before_action :authenticate_user!
   before_action :set_group_members
 
@@ -6,7 +6,8 @@ class GroupMembersController < ApplicationController
   def index
     authorize! get_group, to: :show_members?
 
-    render json: GroupMemberSerializer.new(@group_members).serializable_hash.to_json
+    @pagy, @records = pagy(@group_members)
+    render json: GroupMemberSerializer.new(@records).serializable_hash
   end
 
   # GET /groups/group_uuid_id/group_members/uuid_id
@@ -14,7 +15,7 @@ class GroupMembersController < ApplicationController
     group_member = @group_members.find(params[:id])
     authorize! group_member
 
-    render json: GroupMemberSerializer.new(group_member, include: [:member]).serializable_hash.to_json
+    render json: GroupMemberSerializer.new(group_member, include: [:member]).serializable_hash
   end
 
   # POST /groups/group_uuid_id/group_members
@@ -35,7 +36,7 @@ class GroupMembersController < ApplicationController
 
     group_member = @group_members.new(group_member_params.merge(member_type.compact))
     if group_member.save
-      render json: GroupMemberSerializer.new(group_member).serializable_hash.to_json, status: 200
+      render json: GroupMemberSerializer.new(group_member).serializable_hash, status: 200
     else
       render json: group_member.errors, status: 422
     end

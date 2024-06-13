@@ -91,3 +91,5 @@ gem "devise-jwt"
 gem "action_policy"
 
 gem "data_migrate"
+
+gem "pagy"
