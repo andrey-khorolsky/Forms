@@ -24,12 +24,10 @@ class GroupsController < ApplicationController
 
     ActiveRecord::Base.transaction do
       group.save
-      group.add_admin
-
-      render json: GroupSerializer.new(group).serializable_hash.to_json, status: 200
+      group.add_admin(current_user)
     end
 
-    group.valid?
+    return render json: GroupSerializer.new(group).serializable_hash.to_json, status: 200 if group.valid?
     render json: group.errors, status: 422
   end
 

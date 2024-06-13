@@ -1,6 +1,6 @@
 class PermissionPolicy < ApplicationPolicy
   def index?
-    user.admin_for?(record.id)
+    user.admin_for?(record.ids)
   end
 
   def update?

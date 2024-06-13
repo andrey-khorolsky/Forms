@@ -26,7 +26,7 @@ module Stored
 
     def add_owner(role_name, user)
       role_id = Role.find_by_name(role_name).id
-      Permission.create!(owner: user, entity: self, role_id: role_id)
+      Permission.create!(owner: user, owner_type: user.class, entity: self, role_id: role_id)
     end
   end
 end
