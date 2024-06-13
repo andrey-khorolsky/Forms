@@ -17,9 +17,9 @@ class AnswerContract < Dry::Validation::Contract
     end
   end
 
-  rule(:answer_data) do
-    unless value.count == values[:answers_count]
-      key.failure("Expected answers count and actual answers count not matches")
-    end
-  end
+  # rule(:answer_data) do
+  #   unless value.count == values[:answers_count]
+  #     key.failure("Expected answers count and actual answers count not matches")
+  #   end
+  # end
 end
