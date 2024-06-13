@@ -14,7 +14,7 @@ class SurveyRepository
       @survey = Survey.new(survey_params)
       return Failure(@survey.errors.messages.to_json) unless @survey.save
 
-      @survey.add_admin(user)
+      AddPermissionService.add_admin(@survey, user)
     end
 
     Success([@survey, @question])

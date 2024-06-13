@@ -7,15 +7,20 @@ class AnswerSpreadsheetsController < ApplicationController
 
     # authorize! survey, to: :get_statistics?
 
-    filename = "#{survey.name} - Ответы"
+    filename = "#{survey.name} - Ответы #{DateTime.current.strftime "%F-%R"}"
+    spreadsheet_creator = ::Statistics::SpreadsheetCreator.new(survey)
 
     case params[:format]
     when "xlsx"
-      render xlsx: ::Statistics::SpreadsheetCreator.new(survey).create_xlsx, filename: filename
+      render xlsx: spreadsheet_creator.create_xlsx, filename: filename
     when "csv"
-      render csv: ::Statistics::SpreadsheetCreator.new(survey).create_csv, filename: filename
+      render csv: spreadsheet_creator.create_csv, filename: filename
+    when "ods"
+      render ods: spreadsheet_creator.create_ods, filename: filename
     when "xml"
-      render xml: ::Statistics::SpreadsheetCreator.new(survey).create_xml, filename: filename
+      send_data spreadsheet_creator.create_xml, filename: filename + ".xml", type: "text/xml"
+    when "yaml"
+      send_data spreadsheet_creator.create_yaml, filename: filename + ".yaml", type: "text/yaml"
     end
   end
 end

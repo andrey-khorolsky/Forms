@@ -1,11 +1,12 @@
-class SurveysController < ApplicationController
+class SurveysController < PaginationController
   # before_action :authenticate_user!
 
   # GET /surveys
   def index
     # authorize! Survey
 
-    render json: SurveySerializer.new(Survey.all).serializable_hash.to_json
+    @pagy, @records = pagy(Survey.all)
+    render json: SurveySerializer.new(@records).serializable_hash
   end
 
   # GET /surveys/98e17521-56d6-4ecc-a903-091ff4a387c5
@@ -13,7 +14,7 @@ class SurveysController < ApplicationController
     survey = Survey.find(params[:id])
     # authorize! survey
 
-    render json: SurveySerializer.new(survey).serializable_hash.to_json
+    render json: SurveySerializer.new(survey).serializable_hash
   end
 
   # POST /surveys
@@ -23,7 +24,7 @@ class SurveysController < ApplicationController
     survey = SurveyRepository.new.create(survey_params, User.last)
 
     if survey.success?
-      render json: SurveySerializer.new(survey.success.first).serializable_hash.to_json
+      render json: SurveySerializer.new(survey.success.first).serializable_hash
     else
       render json: survey.failure, status: 422
     end

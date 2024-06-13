@@ -1,11 +1,13 @@
-class AnswersController < ApplicationController
+class AnswersController < PaginationController
   # before_action :authenticate_user!
   before_action :set_survey, only: [:index, :show, :create]
 
   # GET /surveys/survey_uuid_id/answers
   def index
     # authorize! @survey, to: :index_answer?
-    render json: AnswerSerializer.new(@survey.answers).serializable_hash.to_json
+
+    @pagy, @records = pagy(@survey.answers)
+    render json: AnswerSerializer.new(@records).serializable_hash
   end
 
   # GET /surveys/survey_uuid_id/answers/uuid_id
@@ -13,7 +15,7 @@ class AnswersController < ApplicationController
     answer = @survey.answers.find(params[:id])
     # authorize! answer
 
-    render json: AnswerSerializer.new(answer).serializable_hash.to_json
+    render json: AnswerSerializer.new(answer).serializable_hash
   end
 
   # POST /surveys/survey_uuid_id/answers
@@ -27,7 +29,7 @@ class AnswersController < ApplicationController
     answer = AnswerRepository.new.create(answer_params.merge({survey_id: params[:survey_id], user_id: User.last.id}))
 
     if answer.success?
-      render json: AnswerSerializer.new(answer.success.first).serializable_hash.to_json, status: 200
+      render json: AnswerSerializer.new(answer.success.first).serializable_hash, status: 200
     else
       render json: answer.failure, status: 422
     end
