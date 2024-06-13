@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
 
   rescue_from ActionPolicy::Unauthorized, with: :forbidden
   rescue_from ActiveRecord::RecordNotFound, Mongoid::Errors::DocumentNotFound, with: :not_found_error
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -31,5 +32,11 @@ class ApplicationController < ActionController::API
     render json: {
       message: "Not enough access"
     }, status: 403
+  end
+
+  def unprocessable_entity
+    render json: {
+      message: "Unprocessable entity"
+    }, status: 422
   end
 end

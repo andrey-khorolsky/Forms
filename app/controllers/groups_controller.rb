@@ -21,15 +21,9 @@ class GroupsController < PaginationController
   def create
     authorize! Group
 
-    group = Group.new(group_params)
+    group = GroupCreatorService.create_group_from_params(group_params, current_user)
 
-    ActiveRecord::Base.transaction do
-      group.save
-      group.add_admin(current_user)
-    end
-
-    return render json: GroupSerializer.new(group).serializable_hash, status: 200 if group.valid?
-    render json: group.errors, status: 422
+    render json: GroupSerializer.new(group).serializable_hash
   end
 
   # PATCH/PUT /groups/b285ce14-628d-4a31-aac3-7b731c7a6ca0
