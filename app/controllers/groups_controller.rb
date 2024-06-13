@@ -26,10 +26,10 @@ class GroupsController < ApplicationController
       group.save
       group.add_admin(User.last)
 
-      render json: GroupSerializer.new(group).serializable_hash.to_json, status: 200
     end
 
-    group.valid?
+    return render json: GroupSerializer.new(group).serializable_hash.to_json, status: 200 if group.valid?
+
     render json: group.errors, status: 422
   end
 
