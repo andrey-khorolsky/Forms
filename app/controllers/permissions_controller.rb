@@ -1,4 +1,4 @@
-class PermissionsController < ApplicationController
+class PermissionsController < PaginationController
   before_action :authenticate_user!
   before_action :set_permission, only: [:show, :update, :destroy]
 
@@ -6,7 +6,8 @@ class PermissionsController < ApplicationController
     permissions = get_entity.permissions_as_entity
     authorize! permissions
 
-    render json: PermissionSerializer.new(permissions, include: [:owner]).serializable_hash
+    @pagy, @records = pagy(permissions)
+    render json: PermissionSerializer.new(records, include: [:owner]).serializable_hash
   end
 
   def show

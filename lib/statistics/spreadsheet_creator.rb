@@ -15,7 +15,11 @@ module Statistics
       SpreadsheetArchitect.to_csv(headers: headers, data: data)
     end
 
-    # maybe should move to another location
+    def create_ods
+      headers, data = get_headers_data
+      SpreadsheetArchitect.to_ods(headers: headers, data: data)
+    end
+
     def create_xml
       headers, data = get_headers_data
       data.map do |row|
@@ -23,6 +27,14 @@ module Statistics
           [item.delete("?"), row[ind]]
         end.to_h
       end.to_xml(root: "answers")
+    end
+
+    def create_yaml
+      headers, data = get_headers_data
+
+      headers.map.with_index do |question, question_number|
+        [question => data.map { |answers| answers[question_number] }]
+      end.to_yaml
     end
 
     private

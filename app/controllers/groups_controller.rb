@@ -1,4 +1,4 @@
-class GroupsController < ApplicationController
+class GroupsController < PaginationController
   before_action :authenticate_user!
   before_action :set_group, only: [:show, :update, :destroy]
 
@@ -6,29 +6,24 @@ class GroupsController < ApplicationController
   def index
     authorize! Group
 
-    render json: GroupSerializer.new(Group.all).serializable_hash.to_json
+    @pagy, @records = pagy(Group.all)
+    render json: GroupSerializer.new(@records).serializable_hash
   end
 
   # GET /groups/b285ce14-628d-4a31-aac3-7b731c7a6ca0
   def show
     authorize! @group
 
-    render json: GroupSerializer.new(@group).serializable_hash.to_json
+    render json: GroupSerializer.new(@group).serializable_hash
   end
 
   # POST /groups
   def create
     authorize! Group
 
-    group = Group.new(group_params)
+    group = GroupCreatorService.create_group_from_params(group_params, current_user)
 
-    ActiveRecord::Base.transaction do
-      group.save
-      group.add_admin(current_user)
-    end
-
-    return render json: GroupSerializer.new(group).serializable_hash.to_json, status: 200 if group.valid?
-    render json: group.errors, status: 422
+    render json: GroupSerializer.new(group).serializable_hash
   end
 
   # PATCH/PUT /groups/b285ce14-628d-4a31-aac3-7b731c7a6ca0
@@ -36,7 +31,7 @@ class GroupsController < ApplicationController
     authorize! @group
 
     if @group.update(group_params)
-      render json: GroupSerializer.new(@group).serializable_hash.to_json, status: 200
+      render json: GroupSerializer.new(@group).serializable_hash, status: 200
     else
       render json: @group.errors, status: 422
     end

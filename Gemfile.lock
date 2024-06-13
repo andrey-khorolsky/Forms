@@ -220,6 +220,7 @@ GEM
     oj (3.16.3)
       bigdecimal (>= 3.0)
     orm_adapter (0.5.0)
+    pagy (6.5.0)
     panko_serializer (0.8.1)
       activesupport
       oj (> 3.11.0, < 4.0.0)
@@ -385,6 +386,7 @@ DEPENDENCIES
   jsonapi-serializer
   mongoid
   oj
+  pagy
   panko_serializer
   pg (~> 1.1)
   puma (~> 5.0)
