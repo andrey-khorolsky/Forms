@@ -1,25 +1,35 @@
 # Database entities
 
-* [ERD](#erd)
-* [Postgres entities][postgres_entities]
-    * [Answer](#answer)
-    * [FieldType](#fieldtype)
-    * [GroupMember](#groupmember)
-    * [Group](#group)
-    * [Permission](#permission)
-    * [Role](#role)
-    * [Survey](#survey)
-    * [User](#user)
-* [Mongo entities][mongo_entities]
-    * [AnswerDatum](#answerdatum)
-    * [Question](#question)
+- [Database entities](#database-entities)
+  - [Diagrams](#diagrams)
+    - [Key based diagram](#key-based-diagram)
+    - [ERD](#erd)
+  - [Postgres entities](#postgres-entities)
+    - [Answer](#answer)
+    - [FieldType](#fieldtype)
+    - [GroupMember](#groupmember)
+    - [Group](#group)
+    - [Permission](#permission)
+    - [Role](#role)
+    - [Survey](#survey)
+    - [User](#user)
+  - [Mongo entities](#mongo-entities)
+    - [AnswerDatum](#answerdatum)
+    - [Question](#question)
 
 ___
+## Diagrams
 
-## ERD
+[All diagrams](/doc/database_diagrams.pdf)
+
+### Key based diagram
+Модель основанная на ключах
+![key_based_diagram](/doc/img/key_based.jpg)
+
+### ERD
 
 ERD for active_record models (without mongo)
-![erd](/doc/erd_image.png)
+![erd](/doc/img/erd_image.png)
 
 ## Postgres entities
 
