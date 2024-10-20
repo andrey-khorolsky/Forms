@@ -4,7 +4,7 @@ class SurveyPolicy < ApplicationPolicy
   end
 
   def show?
-    !record.private || User.find(user_id).role_for_entity?(id)
+    !record.private || user.role_for_entity?(record.id)
   end
 
   def create?
@@ -20,7 +20,7 @@ class SurveyPolicy < ApplicationPolicy
   end
 
   def create_answer?
-    !record.private || User.find(user_id).role_for_entity?(id)
+    !record.private || user.role_for_entity?(record.id)
   end
 
   def get_statistics?
