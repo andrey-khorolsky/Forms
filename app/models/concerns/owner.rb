@@ -25,7 +25,7 @@ module Owner
     end
 
     def manager_or_admin?(entity_id)
-      role_for_entity?(record.id).in?([Role::ADMIN, Role::MANAGER])
+      role_for_entity?(entity_id).in?([Role::ADMIN, Role::MANAGER])
     end
 
     def role_for_entity?(entity_id)
