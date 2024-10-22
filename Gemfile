@@ -55,6 +55,8 @@ group :development, :test do
   gem "benchmark"
 
   gem "dotenv"
+
+  gem "rswag-specs"
 end
 
 group :development do
@@ -93,3 +95,5 @@ gem "action_policy"
 gem "data_migrate"
 
 gem "pagy"
+
+gem "rswag-api"
