@@ -16,6 +16,8 @@ class AnswerSpreadsheetsController < ApplicationController
       render csv: ::Statistics::SpreadsheetCreator.new(survey).create_csv, filename: filename
     when "xml"
       render xml: ::Statistics::SpreadsheetCreator.new(survey).create_xml, filename: filename
+    else
+      render json: {}, status: 400
     end
   end
 end

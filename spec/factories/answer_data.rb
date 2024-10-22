@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :answer_datum do
     answers_count { 2 }
-    answer_data {
+    answer_data do
       [
         {
           number: 1,
@@ -12,6 +12,6 @@ FactoryBot.define do
           result: Faker::Lorem.sentence(word_count: 4)
         }
       ]
-    }
+    end
   end
 end
