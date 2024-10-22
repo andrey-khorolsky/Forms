@@ -4,6 +4,7 @@ class Question
   include Mongoid::Attributes::Dynamic
 
   field :questions_count, type: Integer # count of questions
+  field :questions, type: Array
 
   validates :questions_count, presence: true, numericality: {only_integer: true}
   validate :schema_validation

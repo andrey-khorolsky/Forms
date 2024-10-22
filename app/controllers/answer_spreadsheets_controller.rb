@@ -21,6 +21,8 @@ class AnswerSpreadsheetsController < ApplicationController
       send_data spreadsheet_creator.create_xml, filename: filename + ".xml", type: "text/xml"
     when "yaml"
       send_data spreadsheet_creator.create_yaml, filename: filename + ".yaml", type: "text/yaml"
+    else
+      render json: {}, status: 400
     end
   end
 end
