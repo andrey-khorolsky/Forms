@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Api::Engine => "/api-docs"
+
   concern :permissionable do
     resources :permissions
   end

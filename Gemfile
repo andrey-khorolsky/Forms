@@ -55,6 +55,8 @@ group :development, :test do
   gem "benchmark"
 
   gem "dotenv"
+
+  gem "rswag-specs"
 end
 
 group :development do
@@ -89,3 +91,5 @@ gem "devise", "~> 4.9"
 gem "devise-jwt"
 
 gem "action_policy"
+
+gem "rswag-api"
