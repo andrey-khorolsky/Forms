@@ -37,12 +37,12 @@ RSpec.describe "answer_spreadsheets", type: :request do
       end
 
       response(200, "send xml file") do
-        produces "application/xml; charset=utf-8"
+        produces "text/xml"
 
         let(:format) { ".xml" }
 
         run_test! do |response|
-          expect(response.content_type).to eq "application/xml; charset=utf-8"
+          expect(response.content_type).to eq "text/xml"
         end
       end
 

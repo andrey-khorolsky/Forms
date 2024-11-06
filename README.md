@@ -1,8 +1,10 @@
 # Forms REST api
 
-* [Ruby version](#ruby-version)
-* [Database](#database)
-  * [All entities](#all-entities)
+- [Forms REST api](#forms-rest-api)
+  - [Ruby version](#ruby-version)
+  - [Database](#database)
+    - [All entities](#all-entities)
+  - [Documentation](#documentation)
 
 
 ## Ruby version
@@ -29,6 +31,10 @@ All tables (entities) has the uuid id type, except field_type and mongo models
 
 ### [All entities](/doc/database_entities.md)
 
+
+## Documentation
+
+Swagger 3.0.1 documentation: https://bump.sh/andrey-khorolsky/doc/forms-api
 
 
 <!--

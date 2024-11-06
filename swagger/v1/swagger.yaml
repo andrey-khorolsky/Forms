@@ -1,0 +1,62 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/surveys/{survey_id}/answer_spreadsheet{format}":
+    parameters:
+    - name: survey_id
+      in: path
+      description: survey's ID
+      required: true
+      schema:
+        type: string
+    - name: format
+      in: path
+      description: format of response
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show answer_spreadsheet
+      responses:
+        '200':
+          description: send xml file
+        '400':
+          description: incorrect format
+        '404':
+          description: survey not found
+  "/surveys/{survey_id}/answer_statistics":
+    parameters:
+    - name: survey_id
+      in: path
+      description: survey_id
+      required: true
+      schema:
+        type: string
+    - name: date_from
+      in: body
+      description: from this date statistics will be collected
+      schema:
+        type: string
+    - name: date_to
+      in: body
+      description: to this date statistics will be collected
+      schema:
+        type: string
+    - name: except_question_numbers
+      in: body
+      description: numbers of questions, that are not included in statistics
+      schema:
+        type: string
+    get:
+      summary: show answer_statistic
+      responses:
+        '200':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
