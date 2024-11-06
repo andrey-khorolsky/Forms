@@ -5,7 +5,7 @@ class SurveysController < PaginationController
   def index
     authorize! Survey
 
-    @pagy, @records = pagy(Survey.all)
+    @pagy, @records = pagy(Survey.with_question)
     render json: SurveySerializer.new(@records).serializable_hash
   end
 

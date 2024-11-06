@@ -20,6 +20,10 @@ class Question
     questions.map { [_1[:number], _1[:type]] }.to_h
   end
 
+  def self.ids
+    all.map { _1.id.to_s }
+  end
+
   private
 
   def schema_validation

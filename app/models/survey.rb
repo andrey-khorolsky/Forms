@@ -8,6 +8,8 @@ class Survey < ApplicationRecord
 
   has_many :answers, dependent: :destroy
 
+  scope :with_question, -> { where(question_mongo_id: Question.ids) }
+
   # association with question model in mongo
   def question
     Question.find_by(id: question_mongo_id)
