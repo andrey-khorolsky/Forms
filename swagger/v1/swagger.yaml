@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/surveys/{survey_id}/answer_spreadsheet{format}":
+  "/surveys/{survey_id}/answer_spreadsheet":
     parameters:
     - name: survey_id
       in: path
@@ -13,16 +13,15 @@ paths:
       schema:
         type: string
     - name: format
-      in: path
-      description: format of response
-      required: true
+      in: query
+      description: format of file (xlsx, csv, ods, xml, yaml)
       schema:
         type: string
     get:
       summary: show answer_spreadsheet
       responses:
         '200':
-          description: send xml file
+          description: sends file
         '400':
           description: incorrect format
         '404':
@@ -36,17 +35,17 @@ paths:
       schema:
         type: string
     - name: date_from
-      in: body
+      in: query
       description: from this date statistics will be collected
       schema:
         type: string
     - name: date_to
-      in: body
+      in: query
       description: to this date statistics will be collected
       schema:
         type: string
     - name: except_question_numbers
-      in: body
+      in: query
       description: numbers of questions, that are not included in statistics
       schema:
         type: string
@@ -55,6 +54,8 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: not found
 servers:
 - url: https://{defaultHost}
   variables:
